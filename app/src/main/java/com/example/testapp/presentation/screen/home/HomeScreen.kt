@@ -13,20 +13,21 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.testapp.presentation.composables.CustomAlertDialog
-import com.example.testapp.presentation.composables.CustomImageCarousel
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.data.Resource
 import com.example.testapp.navigation.Screen
+import com.example.testapp.presentation.composables.CustomAlertDialog
+import com.example.testapp.presentation.composables.CustomImageCarousel
 import com.example.testapp.ui.theme.Loading_Orange
 
 @Composable
@@ -35,14 +36,15 @@ fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
     val activity = LocalContext.current as Activity
-
     val moviesListState by viewModel.detailsFlow.collectAsState()
 
-    var isExitDialogVisible = rememberSaveable {
+    val isExitDialogVisible = rememberSaveable {
         mutableStateOf(false)
     }
 
     BackHandler { isExitDialogVisible.value = true }
+
+    val lazyMovieItems = viewModel.moviesFlow.collectAsLazyPagingItems()
 
     CustomAlertDialog(
         showDialog = isExitDialogVisible,
@@ -59,7 +61,7 @@ fun HomeScreen(
             .background(Color.Transparent),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        //Slider
+        // Slider Section
         item {
             moviesListState.let {
                 when (it) {
@@ -98,6 +100,22 @@ fun HomeScreen(
 
                     else -> {}
                 }
+            }
+        }
+
+        //Pagination
+        items(lazyMovieItems.itemCount) { index ->
+            key(lazyMovieItems[index]?.imdbID ?: index) {
+                MovieTrendingItem(
+                    it = lazyMovieItems[index]!!,
+                    onItemClick = { id ->
+                        navController.navigate(
+                            Screen.MovieDetailsScreen.passArguments(
+                                movieId = id ?: ""
+                            )
+                        )
+                    }
+                )
             }
         }
     }

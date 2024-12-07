@@ -22,7 +22,6 @@ fun CustomImageAsync(
 ) {
     val context = LocalContext.current
 
-
     val imageRequest = ImageRequest.Builder(context)
         .data(imageUrl)
         .memoryCacheKey(imageUrl)

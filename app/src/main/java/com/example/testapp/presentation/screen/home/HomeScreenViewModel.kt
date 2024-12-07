@@ -2,9 +2,13 @@ package com.example.testapp.presentation.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.example.data.Resource
 import com.example.data.repository.AppRepository
 import com.example.network.model.MoviesResponse
+import com.example.paging.MoviePagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,4 +34,10 @@ class HomeScreenViewModel @Inject constructor(
             }
         }
     }
+
+    //Pagination using Paging 3 library
+    val moviesFlow = Pager(
+        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        pagingSourceFactory = { MoviePagingSource(appRepo) }
+    ).flow.cachedIn(viewModelScope)
 }

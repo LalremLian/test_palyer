@@ -3,6 +3,7 @@ package com.example.testapp.presentation.details
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -38,7 +39,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -62,10 +62,12 @@ fun MovieDetailsScreen(
 ) {
     val movieDetailsState by viewModel.detailsFlow.collectAsState()
 
-    val movieModel by remember { mutableStateOf<MovieDetailsResponse?>(null) }
-
     LaunchedEffect(key1 = id) {
         viewModel.getMoviesDetails(id)
+    }
+
+    BackHandler {
+        navController.popBackStack()
     }
 
     movieDetailsState.let {
@@ -173,7 +175,8 @@ fun DetailsScreenContent(
                         color = Color.White,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.W400,
-                        modifier = Modifier.padding(start = 8.dp)
+                        lineHeight = 20.sp,
+                        modifier = Modifier.padding(start = 8.dp, end = 8.dp)
                     )
                     CustomText(
                         text = movie.Language ?: "No language available",

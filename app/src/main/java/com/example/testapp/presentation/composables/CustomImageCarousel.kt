@@ -19,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,41 +62,44 @@ fun CustomImageCarousel(
                     )
                 }
         ) { index ->
-            Card(
-                border = BorderStroke(1.dp, Color(0xFFB3B3B3)),
-                modifier = Modifier
-                    .padding(horizontal = 6.dp)
-                    .aspectRatio(0.67f / 1f)
-                    .clickable { onItemClick(sliderList.Search[index].imdbID ?: "") }
-                    .graphicsLayer {
-                        val pageOffset =
-                            (pagerState.currentPage - index) + pagerState.currentPageOffsetFraction
-                        lerp(
-                            start = 0.9f,
-                            stop = 1f,
-                            fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1f),
-                        ).also { scale ->
-                            scaleX = scale * 1.1f
-                            scaleY = scale * 1.2f
+            key(sliderList.Search[index].imdbID ?: "")
+            {
+                Card(
+                    border = BorderStroke(1.dp, Color(0xFFB3B3B3)),
+                    modifier = Modifier
+                        .padding(horizontal = 6.dp)
+                        .aspectRatio(0.67f / 1f)
+                        .clickable { onItemClick(sliderList.Search[index].imdbID ?: "") }
+                        .graphicsLayer {
+                            val pageOffset =
+                                (pagerState.currentPage - index) + pagerState.currentPageOffsetFraction
+                            lerp(
+                                start = 0.9f,
+                                stop = 1f,
+                                fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1f),
+                            ).also { scale ->
+                                scaleX = scale * 1.1f
+                                scaleY = scale * 1.2f
+                            }
+                            alpha = lerp(
+                                start = 0.5f,
+                                stop = 1f,
+                                fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1f),
+                            )
                         }
-                        alpha = lerp(
-                            start = 0.5f,
-                            stop = 1f,
-                            fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1f),
+                ) {
+                    Box {
+                        CustomImageAsync(
+                            imageUrl = "${sliderList.Search[index].Poster}",
+                            size = 512,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .fillMaxWidth()
+                                .fillMaxHeight(),
+                            contentScale = ContentScale.FillBounds,
+                            contentDescription = "ImageRequest example",
                         )
                     }
-            ) {
-                Box {
-                    CustomImageAsync(
-                        imageUrl = "${sliderList.Search[index].Poster}",
-                        size = 512,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
-                        contentScale = ContentScale.FillBounds,
-                        contentDescription = "ImageRequest example",
-                    )
                 }
             }
         }
@@ -108,7 +112,7 @@ fun CustomImageCarousel(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
-                .padding(top = 30.dp, start = 16.dp, end = 16.dp)
+                .padding(top = 40.dp, start = 16.dp, end = 16.dp)
                 .align(Alignment.CenterHorizontally)
         )
 

@@ -7,5 +7,11 @@ class AppRepository @Inject constructor(
     private val api: ApiInterface,
 ) {
     suspend fun fetchDetails(movieTitle: String) = api.getDetails(title = movieTitle)
-    suspend fun fetchMovieList(movieTitle: String) = api.getListOfBatman(title = movieTitle)
+    suspend fun fetchMovieList(
+        movieTitle: String,
+        page: Int? = 1
+    ) = api.getListOfBatman(
+        title = movieTitle,
+        page = page!!
+    )
 }
