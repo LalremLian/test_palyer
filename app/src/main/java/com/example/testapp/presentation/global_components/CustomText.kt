@@ -1,4 +1,4 @@
-package com.example.testapp.presentation.composables
+package com.example.testapp.presentation.global_components
 
 import android.annotation.SuppressLint
 import androidx.compose.material3.Text
@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
+// Custom Text composable to display the text with custom styling
 @Composable
 fun CustomText(
     text: String = "",

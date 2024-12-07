@@ -1,4 +1,4 @@
-package com.example.testapp.presentation.composables
+package com.example.testapp.presentation.global_components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -36,6 +36,7 @@ import com.example.network.model.MoviesResponse
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 
+// Custom Image Carousel composable to display the images in a carousel view
 @Composable
 fun CustomImageCarousel(
     sliderList: MoviesResponse,
@@ -62,6 +63,7 @@ fun CustomImageCarousel(
                     )
                 }
         ) { index ->
+            // key is used to make sure that the item is re-created when the index changes
             key(sliderList.Search[index].imdbID ?: "")
             {
                 Card(
@@ -130,6 +132,7 @@ fun CustomImageCarousel(
         }
     }
 
+    // Auto scroll the carousel on every 4 seconds
     LaunchedEffect(key1 = Unit) {
         repeat(
             times = Int.MAX_VALUE,

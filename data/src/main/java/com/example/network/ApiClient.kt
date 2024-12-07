@@ -7,8 +7,10 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient {
     companion object {
+        // Base URL for the OMDB API
         private const val BASE_URL ="http://www.omdbapi.com"
 
+        // Create a new OkHttpClient instance
         private fun getClient(): OkHttpClient.Builder {
             return OkHttpClient().newBuilder()
                 .callTimeout(3, TimeUnit.MINUTES)
@@ -18,12 +20,14 @@ class ApiClient {
                 .addInterceptor(getHttpLoggingInterceptor())
         }
 
+        // Create a new HttpLoggingInterceptor instance
         private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
             return interceptor
         }
 
+        // Create a new Retrofit instance
         fun getRetrofit(): Retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

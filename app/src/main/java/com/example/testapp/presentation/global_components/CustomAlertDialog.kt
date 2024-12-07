@@ -1,4 +1,4 @@
-package com.example.testapp.presentation.composables
+package com.example.testapp.presentation.global_components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.testapp.ui.theme.Background_Black
 
+// Custom Alert Dialog to show the alert dialog with custom message and buttons
 @Composable
 fun CustomAlertDialog(
     showDialog: MutableState<Boolean>,

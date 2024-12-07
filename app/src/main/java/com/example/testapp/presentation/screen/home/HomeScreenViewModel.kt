@@ -27,7 +27,10 @@ class HomeScreenViewModel @Inject constructor(
     private fun getMovies() {
         viewModelScope.launch {
             try {
-                val response = appRepo.fetchMovieList("batman")
+                val response = appRepo.fetchMovieList(
+                    movieTitle = "batman",
+                    year = ""
+                )
                 _detailsFlow.value = Resource.Success(response)
             } catch (e: Exception) {
                 _detailsFlow.value = Resource.Error(e.message ?: "Failed to fetch data")

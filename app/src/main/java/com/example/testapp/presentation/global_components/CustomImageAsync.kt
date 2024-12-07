@@ -1,4 +1,4 @@
-package com.example.testapp.presentation.composables
+package com.example.testapp.presentation.global_components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -12,6 +12,7 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.example.testapp.R
 
+// Custom Image composable to load images from the internet
 @Composable
 fun CustomImageAsync(
     imageUrl: String,

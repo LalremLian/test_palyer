@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.testapp.navigation.Graph
 import com.example.testapp.navigation.Screen
-import com.example.testapp.presentation.composables.CustomText
+import com.example.testapp.presentation.global_components.CustomText
 import com.example.testapp.ui.theme.Background_Black
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay

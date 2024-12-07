@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,14 +22,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.data.Resource
 import com.example.testapp.navigation.Screen
-import com.example.testapp.presentation.composables.CustomAlertDialog
-import com.example.testapp.presentation.composables.CustomImageCarousel
+import com.example.testapp.presentation.global_components.CustomAlertDialog
+import com.example.testapp.presentation.global_components.CustomImageCarousel
+import com.example.testapp.presentation.global_components.CustomText
 import com.example.testapp.ui.theme.Loading_Orange
 
 @Composable
@@ -103,20 +109,37 @@ fun HomeScreen(
             }
         }
 
-        //Pagination
-        items(lazyMovieItems.itemCount) { index ->
-            key(lazyMovieItems[index]?.imdbID ?: index) {
-                MovieTrendingItem(
-                    it = lazyMovieItems[index]!!,
-                    onItemClick = { id ->
-                        navController.navigate(
-                            Screen.MovieDetailsScreen.passArguments(
-                                movieId = id ?: ""
-                            )
+        // Latest Movies Section with Pagination will load automatically when user scrolls
+        item {
+            CustomText(
+                text = "Latest movies",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White,
+                maxLines = 2,
+                overFlow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp, top = 5.dp, end = 5.dp)
+            )
+            LazyRow {
+                items(lazyMovieItems.itemCount) { index ->
+                    // key is used to avoid recomposition of the item when the list is scrolled
+                    key(lazyMovieItems[index]?.imdbID ?: index) {
+                        MovieTrendingItem(
+                            it = lazyMovieItems[index]!!,
+                            onItemClick = { id ->
+                                navController.navigate(
+                                    Screen.MovieDetailsScreen.passArguments(
+                                        movieId = id ?: ""
+                                    )
+                                )
+                            }
                         )
                     }
-                )
+                }
             }
         }
+
     }
 }

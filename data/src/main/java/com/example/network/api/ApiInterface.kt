@@ -20,6 +20,7 @@ interface ApiInterface {
     suspend fun getListOfBatman(
         @Query("s") title: String,
         @Query("page") page: Int = 1,
+        @Query("y") year: String? = "",
         @Query("apikey") apiKey: String = API_TOKEN,
     ): MoviesResponse
 }

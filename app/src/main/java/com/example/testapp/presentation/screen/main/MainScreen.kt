@@ -1,8 +1,12 @@
 package com.example.testapp.presentation.screen.main
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.util.Log
+import android.view.View
+import android.view.WindowInsets
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -16,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.example.testapp.navigation.HomeNavGraph
 import com.example.testapp.navigation.Screen
@@ -28,6 +33,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun MainScreen(
     navHostController: NavHostController,
 ) {
+    val context = LocalContext.current
+    val activity = context as Activity
     //Remember the scaffold state
     val scaffoldState = rememberScaffoldState()
 
@@ -47,6 +54,28 @@ fun MainScreen(
         systemUiController.setSystemBarsColor(
             color = Background_Black,
         )
+
+        //Hide the status bar and set the orientation to landscape for the player screens
+        if (currentPageState.value == Screen.Media3Screen.route) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val controller = activity.window.decorView.windowInsetsController
+                controller?.hide(WindowInsets.Type.statusBars())
+            } else {
+                @Suppress("DEPRECATION")
+                activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+            }
+            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val controller = activity.window.decorView.windowInsetsController
+                controller?.show(WindowInsets.Type.statusBars())
+            } else {
+                @Suppress("DEPRECATION")
+                activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+            }
+            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        }
     }
 
     //Scaffold is a pre-defined layout structure in Jetpack Compose
@@ -61,12 +90,14 @@ fun MainScreen(
                 .background(Color.Transparent)
         ) {
             //Called the component for the top bar
-            TopBar(
-                showTitle = currentPageState.value != "details_screen/{movie_id}",
-                onBackPressed = {
-                    navHostController.popBackStack()
-                }
-            )
+            if(currentPageState.value != "movie_player_screen/{movie_title}") {
+                TopBar(
+                    showTitle = currentPageState.value != "details_screen/{movie_id}",
+                    onBackPressed = {
+                        navHostController.popBackStack()
+                    }
+                )
+            }
 
             //Called the navigation graph for the MainScreen
             HomeNavGraph(

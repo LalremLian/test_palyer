@@ -1,4 +1,4 @@
-package com.example.testapp.presentation.details
+package com.example.testapp.presentation.screen.details
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -30,8 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,9 +46,10 @@ import androidx.navigation.NavController
 import com.example.data.Resource
 import com.example.network.model.MovieDetailsResponse
 import com.example.testapp.R
-import com.example.testapp.presentation.composables.CustomImage
-import com.example.testapp.presentation.composables.CustomImageAsync
-import com.example.testapp.presentation.composables.CustomText
+import com.example.testapp.navigation.Screen
+import com.example.testapp.presentation.global_components.CustomImage
+import com.example.testapp.presentation.global_components.CustomImageAsync
+import com.example.testapp.presentation.global_components.CustomText
 import com.example.testapp.ui.theme.Background_Black
 import com.example.testapp.ui.theme.Loading_Orange
 
@@ -90,7 +89,13 @@ fun MovieDetailsScreen(
                     movie = movie,
                     navController = navController,
                     viewModel = viewModel,
-                    onClick = { navController.popBackStack() },
+                    onWatchClick = {
+                        navController.navigate(
+                            Screen.Media3Screen.passArguments(
+                                movieTitle = movie.Title ?: "No title available"
+                            )
+                        )
+                    },
                 )
             }
 
@@ -108,7 +113,7 @@ fun DetailsScreenContent(
     movie: MovieDetailsResponse,
     navController: NavController,
     viewModel: MovieDetailsScreenViewModel? = null,
-    onClick: () -> Unit = {},
+    onWatchClick: () -> Unit = {},
 ) {
     val context: Context = LocalContext.current
     val sheetState = rememberModalBottomSheetState()
@@ -212,7 +217,7 @@ fun DetailsScreenContent(
                     .height(43.dp)
                     .clip(RoundedCornerShape(5.dp))
                     .background(Loading_Orange)
-                    .clickable { }
+                    .clickable { onWatchClick.invoke() }
             ) {
                 Row(
                     modifier = Modifier.align(Alignment.Center)

@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.testapp.R
-import com.example.testapp.presentation.composables.CustomImage
-import com.example.testapp.presentation.composables.CustomText
+import com.example.testapp.presentation.global_components.CustomImage
+import com.example.testapp.presentation.global_components.CustomText
 
 // Custom top bar for the app
 @Preview(showBackground = false)

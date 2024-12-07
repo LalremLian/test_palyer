@@ -2,14 +2,7 @@ package com.example.testapp.util
 
 import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
-import android.view.View
 
-fun View.backPress() {
-    this.setOnClickListener {
-        (this.context as Activity).finish()
-    }
-}
 fun Context.findActivity(): Activity? = this as? Activity
 
 fun Long.toHhMmSs(): String {
@@ -22,12 +15,4 @@ fun Long.toHhMmSs(): String {
     } else {
         String.format("%02d:%02d", minutes, remainingSeconds)
     }
-}
-
-fun SharedPreferences.putInt(key: String, value: Int) {
-    edit().putInt(key, value).apply()
-}
-
-fun SharedPreferences.putBoolean(key: String, value: Boolean) {
-    edit().putBoolean(key, value).apply()
 }

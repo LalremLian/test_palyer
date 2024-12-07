@@ -1,4 +1,4 @@
-package com.example.testapp.presentation.composables
+package com.example.testapp.presentation.global_components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 
+// Custom Image composable to load images from drawable resources
 @Composable
 fun CustomImage(
     @DrawableRes imageId: Int,

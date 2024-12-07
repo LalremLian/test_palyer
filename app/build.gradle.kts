@@ -90,14 +90,10 @@ dependencies {
         implementation(work.manager.ktx)
         implementation(bundles.lifecycle)
         implementation(bundles.navigation)
-//        implementation("com.google.firebase:firebase-auth:21.0.1")
-//        implementation("androidx.credentials:credentials:1.3.0-alpha01")
-//        implementation("androidx.credentials:credentials-play-services-auth:1.1.0")
-//        implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
 
         // Image
         implementation(bundles.coil)
-//        implementation(barcode.scanner)
+
         implementation(circleindicator)
 
         // Player
@@ -105,28 +101,5 @@ dependencies {
 
         // Network
         implementation(gson)
-
-//        implementation ("com.google.accompanist:accompanist-webview:0.33.2-alpha")
-
-        // Ads & Mediation
-//        implementation("com.google.android.gms:play-services-ads:22.0.0")
-//        implementation("com.google.ads.mediation:facebook:6.17.0.0")
-//        implementation("com.unity3d.ads:unity-ads:4.10.0")
-//        implementation("com.google.ads.mediation:unity:4.10.0.0")
-//        implementation(libs.ironsource)
-
-        // Lottie
-        implementation("com.airbnb.android:lottie-compose:4.0.0")
-
-//        implementation(platform("com.google.firebase:firebase-bom:30.3.2"))
-//        implementation("com.google.firebase:firebase-firestore-ktx")
-//        implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-//        implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2")
-
-        // Firebase
-//        implementation(bundles.firebase)
-
-        // Play Services
-//        implementation(bundles.play.services)
     }
 }

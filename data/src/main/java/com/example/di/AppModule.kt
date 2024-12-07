@@ -11,15 +11,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
-//    @Singleton
-//    @Provides
-//    fun provideApplicationContext(@ApplicationContext context: Context): Context {
-//        return context.applicationContext
-//    }
-
+    // Provide the interface for the API
     @Singleton
     @Provides
-    fun provideInterfaceSecond(): ApiInterface {
+    fun provideInterface(): ApiInterface {
         return ApiClient.getRetrofit().create(ApiInterface::class.java)
     }
 }

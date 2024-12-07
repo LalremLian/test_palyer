@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.network.model.Search
-import com.example.testapp.presentation.composables.CustomImageAsync
-import com.example.testapp.presentation.composables.CustomText
+import com.example.testapp.presentation.global_components.CustomImageAsync
+import com.example.testapp.presentation.global_components.CustomText
 import com.example.testapp.ui.theme.Background_Black_70
 
 @Preview(showBackground = false)
@@ -34,7 +34,7 @@ fun MovieTrendingItem(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .width(160.dp)
             .height(320.dp)
             .background(Color.Transparent)
             .padding(8.dp)
@@ -77,7 +77,7 @@ fun MovieTrendingItem(
 
         CustomText(
             text = it?.Title ?: "Error",
-            fontSize = 16.sp,
+            fontSize = 12.sp,
             fontWeight = FontWeight.SemiBold,
             color = Color.White,
             maxLines = 2,
@@ -89,8 +89,8 @@ fun MovieTrendingItem(
         )
         CustomText(
             text = "${it?.Year}",
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.Normal,
             color = Color.White,
             maxLines = 2,
             overFlow = TextOverflow.Ellipsis,
