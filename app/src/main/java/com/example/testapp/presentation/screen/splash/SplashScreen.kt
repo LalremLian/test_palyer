@@ -1,6 +1,5 @@
 package com.example.testapp.presentation.screen.splash
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,18 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.navigation.NavHostController
 import com.example.testapp.navigation.Graph
 import com.example.testapp.navigation.Screen
 import com.example.testapp.presentation.composables.CustomText
 import com.example.testapp.ui.theme.Background_Black
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
-@SuppressLint("CoroutineCreationDuringComposition", "UnrememberedMutableState")
 @Composable
 fun SplashScreen(
-    navController: NavController? = null,
+    navController: NavHostController? = null,
 ) {
     val systemUiController = rememberSystemUiController()
 
@@ -35,9 +33,9 @@ fun SplashScreen(
     }
 
     LaunchedEffect(Unit) {
-        delay(5000).apply {
-            navController?.navigate(Graph.HomeGraph) {
-                popUpTo(Screen.SplashScreen) {
+        delay(2000).apply {
+            navController?.navigate(Graph.HomeGraph.route) {
+                popUpTo(Screen.SplashScreen.route) {
                     inclusive = true
                 }
             }

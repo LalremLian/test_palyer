@@ -15,16 +15,17 @@ import com.example.testapp.presentation.screen.splash.SplashScreen
 fun RootNavGraph(
     navHostController: NavHostController,
 ) {
+    //This is the navigation graph for the SplashScreen and MainScreen
     NavHost(
         navController = navHostController,
-        startDestination = Screen.SplashScreen,
+        route = Graph.RootGraph.route,
+        startDestination = Screen.SplashScreen.route,
     ){
-        composable<Screen.SplashScreen> {
+        composable(Screen.SplashScreen.route) {
             SplashScreen(navController = navHostController)
         }
-        composable<Graph.HomeGraph> {
-            MainScreen(navController = rememberNavController())
+        composable(Graph.HomeGraph.route) {
+            MainScreen(navHostController = rememberNavController())
         }
     }
-
 }

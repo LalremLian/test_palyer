@@ -1,7 +1,6 @@
 package com.example.testapp.presentation.composables
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,17 +31,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
-import androidx.navigation.NavController
 import com.example.network.model.MoviesResponse
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CustomImageCarousel(
     sliderList: MoviesResponse,
-    navController: NavController,
-    onGlobalPositionedSize: ((selectedPosition: Int, carouselHeight: Float) -> Unit)? = null
+    onGlobalPositionedSize: ((selectedPosition: Int, carouselHeight: Float) -> Unit)? = null,
+    onItemClick: (String) -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
         initialPage = 3,
@@ -69,7 +66,7 @@ fun CustomImageCarousel(
                 modifier = Modifier
                     .padding(horizontal = 6.dp)
                     .aspectRatio(0.67f / 1f)
-                    .clickable { }
+                    .clickable { onItemClick(sliderList.Search[index].imdbID ?: "") }
                     .graphicsLayer {
                         val pageOffset =
                             (pagerState.currentPage - index) + pagerState.currentPageOffsetFraction

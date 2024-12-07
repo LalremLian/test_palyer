@@ -7,6 +7,8 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class BaseApplication : Application(), ImageLoaderFactory {
+
+    //This is the entry point of the app
      override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(this)
             .build()

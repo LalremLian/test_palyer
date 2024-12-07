@@ -6,13 +6,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -23,6 +26,8 @@ import androidx.navigation.NavController
 import com.example.testapp.presentation.composables.CustomAlertDialog
 import com.example.testapp.presentation.composables.CustomImageCarousel
 import com.example.data.Resource
+import com.example.testapp.navigation.Screen
+import com.example.testapp.ui.theme.Loading_Orange
 
 @Composable
 fun HomeScreen(
@@ -58,7 +63,16 @@ fun HomeScreen(
         item {
             moviesListState.let {
                 when (it) {
-                    is Resource.Loading -> {}
+                    is Resource.Loading -> {
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            LinearProgressIndicator(
+                                color = Loading_Orange,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.BottomCenter)
+                            )
+                        }
+                    }
 
                     is Resource.Success -> {
                         val movie = it.data
@@ -67,7 +81,16 @@ fun HomeScreen(
                                 .wrapContentHeight()
                                 .background(Color.Transparent)
                         ) {
-                            CustomImageCarousel(movie, navController)
+                            CustomImageCarousel(
+                                sliderList = movie,
+                                onItemClick = { movieId ->
+                                    navController.navigate(
+                                        Screen.MovieDetailsScreen.passArguments(
+                                            movieId = movieId
+                                        )
+                                    )
+                                }
+                            )
                         }
                     }
 
@@ -78,10 +101,4 @@ fun HomeScreen(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun HomePreview() {
-    HomeScreen(navController = NavController(LocalContext.current))
 }

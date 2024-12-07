@@ -10,7 +10,7 @@ interface ApiInterface {
     //----------------------------------Details
     @GET("/")
     suspend fun getDetails(
-        @Query("t") title: String,
+        @Query("i") title: String,
         @Query("plot") plot: String = "full",
         @Query("apikey") apiKey: String = API_TOKEN,
     ): MovieDetailsResponse

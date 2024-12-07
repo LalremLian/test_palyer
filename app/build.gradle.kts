@@ -59,9 +59,6 @@ android {
 
 dependencies {
     implementation(project(":data"))
-
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.compose.navigation)
     with(libs) {
         // View
         implementation(splashscreen)
