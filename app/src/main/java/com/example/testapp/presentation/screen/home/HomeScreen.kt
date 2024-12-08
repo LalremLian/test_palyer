@@ -102,7 +102,39 @@ fun HomeScreen(
                         }
                     }
 
-                    is Resource.Error -> {}
+                    is Resource.Error -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.Transparent),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CustomText(
+                                text = it.errorMessage ?: "An error occurred",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color.White,
+                                maxLines = 2,
+                                overFlow = TextOverflow.Ellipsis,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.Center)
+                                    .padding(start = 8.dp, top = 5.dp, end = 5.dp)
+                            )
+                            CustomText(
+                                text = "If you're seeing this error that means api  has request limit reached!",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color.White,
+                                maxLines = 2,
+                                overFlow = TextOverflow.Ellipsis,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.Center)
+                                    .padding(start = 8.dp, top = 80.dp, end = 5.dp)
+                            )
+                        }
+                    }
 
                     else -> {}
                 }
@@ -111,18 +143,21 @@ fun HomeScreen(
 
         // Latest Movies Section with Pagination will load automatically when user scrolls
         item {
-            CustomText(
-                text = "Latest movies",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.White,
-                maxLines = 2,
-                overFlow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, top = 5.dp, end = 5.dp)
-            )
             LazyRow {
+                item {
+                    if (lazyMovieItems.itemCount > 0)
+                        CustomText(
+                            text = "Latest movies",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White,
+                            maxLines = 2,
+                            overFlow = TextOverflow.Ellipsis,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 8.dp, top = 5.dp, end = 5.dp)
+                        )
+                }
                 items(lazyMovieItems.itemCount) { index ->
                     // key is used to avoid recomposition of the item when the list is scrolled
                     key(lazyMovieItems[index]?.imdbID ?: index) {
